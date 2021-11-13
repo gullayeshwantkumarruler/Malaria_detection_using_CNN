@@ -6,6 +6,9 @@ from PIL import Image, ImageOps
 from tensorflow import keras
 import numpy as np
 from tensorflow.keras.preprocessing import image
+
+from tensorflow.keras.applications.imagenet_utils import preprocess_input, decode_predictions
+from tensorflow.keras.models import load_model
 st.set_option('deprecation.showfileUploaderEncoding', False) # to avoid warnings while uploading files
 
 # Here we will use st.cache so that we would load the model only once and store it in the cache memory which will avoid re-loading of model again and again.
@@ -20,13 +23,28 @@ with st.spinner('Model is being loaded..'):
 
 # Function for prediction
 def import_and_predict(image_data, model):
-    size = (64,64)
-    image = Image.open(image_data)
-    image = image.resize((SIZE, SIZE))
-    image = np.asarray(image)
+#     size = (64,64)
+#     image = Image.open(image_data)
+#     image = image.resize((SIZE, SIZE))
+#     image = np.asarray(image)
 #     img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 #     img_reshape = img[np.newaxis,...]
-    prediction = model.predict(image)
+    img = image.load_img(image_data, target_size=(64, 64))
+
+    # Preprocessing the image
+    x = image.img_to_array(img)
+    # x = np.true_divide(x, 255)
+    ## Scaling
+    x=x/255
+    x = np.expand_dims(x, axis=0)
+   
+
+    # Be careful how your trained model deals with the input
+    # otherwise, it won't make correct prediction!
+    x = preprocess_input(x)
+
+    prediction = model.predict(x)
+#     prediction = model.predict(image)
     return prediction
 def main():
     st.title("Malaria Detection")
