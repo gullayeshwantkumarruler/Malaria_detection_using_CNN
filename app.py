@@ -32,16 +32,13 @@ def import_and_predict(image_data, model):
     img = Image.open(image_data)
     img = img.resize((64, 64))
     # Preprocessing the image
-    x = img.img_to_array(img)
+    x = np.array(img)
     # x = np.true_divide(x, 255)
     ## Scaling
-    x=x/255
-    x = np.expand_dims(x, axis=0)
+    x=(x/255.0).astype('float32')
+    
+#     x = np.expand_dims(x, axis=0)
    
-
-    # Be careful how your trained model deals with the input
-    # otherwise, it won't make correct prediction!
-    x = preprocess_input(x)
 
     prediction = model.predict(x)
 #     prediction = model.predict(image)
