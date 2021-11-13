@@ -59,7 +59,7 @@ def main():
         image = Image.open(file)
 
         predictions = import_and_predict(image,model)
-        st.write(predictions)
+#         st.write(predictions)
         score = tf.nn.softmax(predictions[0])
         result1= class_names[np.argmax(predictions[0])]
         if result1=="parasitized":
