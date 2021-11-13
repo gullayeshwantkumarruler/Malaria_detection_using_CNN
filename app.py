@@ -60,8 +60,8 @@ def main():
 
         predictions = import_and_predict(image,model)
         st.write(predictions)
-        score = tf.nn.softmax(predictions[0])
-        result= class_names[np.argmax(predictions[0])]
+        score = tf.nn.softmax(predictions[1])
+        result= class_names[np.argmax(predictions[1])]
 #         st.write('This is {} '.format(result))
         html_temp = f"""
                     <div style="background-color:tomato;padding:10px">
