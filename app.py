@@ -23,25 +23,13 @@ with st.spinner('Model is being loaded..'):
 
 # Function for prediction
 def import_and_predict(image_data, model):
-#     size = (64,64)
-#     image = Image.open(image_data)
-#     image = image.resize((SIZE, SIZE))
-#     image = np.asarray(image)
+    size = (64,64)
+    image = ImageOps.fit(image_data, size, Image.ANTIALIAS)
+    image = np.asarray(image)
 #     img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-#     img_reshape = img[np.newaxis,...]
-    img = Image.open(image_data)
-    img = img.resize((64, 64))
-    # Preprocessing the image
-    x = np.array(img)
-    # x = np.true_divide(x, 255)
-    ## Scaling
-    x=(x/255.0).astype('float32')
-    
-#     x = np.expand_dims(x, axis=0)
-   
+    img_reshape = image[np.newaxis,...]
+    prediction = model.predict(img_reshape)
 
-    prediction = model.predict(x)
-#     prediction = model.predict(image)
     return prediction
 def main():
     st.title("Malaria Detection")
@@ -71,6 +59,7 @@ def main():
         image = Image.open(file)
 
         predictions = import_and_predict(image,model)
+        st.write(predictions)
         score = tf.nn.softmax(predictions[0])
         result= class_names[np.argmax(predictions[0])]
 #         st.write('This is {} '.format(result))
