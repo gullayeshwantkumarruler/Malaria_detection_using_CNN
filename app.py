@@ -21,11 +21,12 @@ with st.spinner('Model is being loaded..'):
 # Function for prediction
 def import_and_predict(image_data, model):
     size = (64,64)
-    image = ImageOps.fit(image_data, size, Image.ANTIALIAS)
+    image = Image.open(image_data)
+    image = image.resize((SIZE, SIZE))
     image = np.asarray(image)
-    img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    img_reshape = img[np.newaxis,...]
-    prediction = model.predict(img_reshape)
+#     img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+#     img_reshape = img[np.newaxis,...]
+    prediction = model.predict(image)
     return prediction
 def main():
     st.title("Malaria Detection")
