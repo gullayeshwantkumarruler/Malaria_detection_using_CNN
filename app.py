@@ -29,10 +29,10 @@ def import_and_predict(image_data, model):
 #     image = np.asarray(image)
 #     img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 #     img_reshape = img[np.newaxis,...]
-    img = image.load_img(image_data, target_size=(64, 64))
-
+    img = Image.open(image_data,)
+    img = img.resize((64, 64))
     # Preprocessing the image
-    x = image.img_to_array(img)
+    x = img.img_to_array(img)
     # x = np.true_divide(x, 255)
     ## Scaling
     x=x/255
