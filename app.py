@@ -41,7 +41,7 @@ def main():
     st.markdown(html_temp,unsafe_allow_html=True)
     file = st.file_uploader("Please upload an image", type=["jpg", "png"])
     class_names=['parasitized','uninfected']
-    result=""
+    result1=""
     final_images=""
     with st.sidebar:
       with st.expander("Upload an image of one of these categories"):
@@ -60,8 +60,12 @@ def main():
 
         predictions = import_and_predict(image,model)
         st.write(predictions)
-        score = tf.nn.softmax(predictions[1])
-        result= class_names[np.argmax(predictions[1])]
+        score = tf.nn.softmax(predictions[0])
+        result1= class_names[np.argmax(predictions[0])]
+        if result1=="parasitized":
+          result="uninfected"
+        elif result1=="uninfected":
+          result="parasitized"
 #         st.write('This is {} '.format(result))
         html_temp = f"""
                     <div style="background-color:tomato;padding:10px">
