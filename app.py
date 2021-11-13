@@ -11,7 +11,7 @@ st.set_option('deprecation.showfileUploaderEncoding', False) # to avoid warnings
 # Here we will use st.cache so that we would load the model only once and store it in the cache memory which will avoid re-loading of model again and again.
 @st.cache(allow_output_mutation=True)
 def load_model():
-  model=tf.keras.models.load_model('my_model_malaria_vgg.hdf5')
+  model=tf.keras.models.load_model('my_model_malaria_custom.hdf5')
   return model
 
 # load and store the model
